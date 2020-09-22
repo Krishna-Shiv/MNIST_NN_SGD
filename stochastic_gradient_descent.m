@@ -1,10 +1,9 @@
 function [gradient, hyp] = stochastic_gradient_descent(X, theta, y, lambda, k, input_layer_size, hidden_layer_size, classes)
 
-    %stochastic grad. descent process (used in first_NN_sgd.m)
+%stochastic grad. descent process (used in first_NN_sgd.m)
     
 %reshape certain parts of theta into w2 and w3. put in this to fit the
 %order of w1, w2,... properly.
-
 w2 = reshape(theta(1:((input_layer_size+1)*hidden_layer_size)),input_layer_size+1,hidden_layer_size)';
 w3 = reshape(theta(((input_layer_size+1)*hidden_layer_size+1):end),hidden_layer_size+1,classes)';
     
@@ -21,38 +20,31 @@ hyp = a3; %hypothesis equals activation of final layer
 a2 = [ones(1,size(a2,2)); a2]; %adding bias to activations of hidden layer
     
 %partial C wrt act. vals of final layer. 
-
 a_partial3 = (a3' - y);
     
-%partial C wrt act. vals of hidden layer, with bias unit sinze input layer isnt connected to bias unit
-    
+%partial C wrt act. vals of hidden layer, with bias unit sinze input layer isnt connected to bias unit   
 a_partial2 = (a_partial3*w3)'.*(a2.*(1-a2));
     
 %removing bias unit from a_partial2
-    
 a_partial2 = a_partial2(2:end,:);
     
-%transposing for right size
-    
+%transposing for right size   
 a_partial3 = a_partial3';
         
 %bias to data 
-
 X_temp = [ones(1,size(X',2)); X']';
     
-%set size of deltas. size(1) is num of act. vals. in front layer bc thats the amt of connections and size(2) is +1 of prev layer bc of bias
-    
+%set size of deltas. size(1) is num of act. vals. in front layer bc thats the amt of connections and size(2) is +1 of prev layer bc of bias 
 delta1 = zeros(hidden_layer_size,input_layer_size+1);
 delta2 = zeros(classes,hidden_layer_size+1);
     
-%k-th division of num of training ex. ceil() used in case decimal val
-    
+%k-th division of num of training ex. ceil() used in case decimal val  
 e = ceil(m/k);
 
 %first lower bound in loop
 s = 1;
     
-%stochastic GD
+%stochastic GD begins
     
 %runs k times since k divisions
 for i = 1:k
