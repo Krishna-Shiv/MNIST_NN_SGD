@@ -25,7 +25,7 @@ for i = 1:size(y,1)
     y_rev(i,y(i)+1) = 1;
 end
 
-%find initiale parameters. check rand_innit. finds -eps<=x<=eps
+%find initial parameters. check rand_innit. finds -eps<=x<=eps
 w2 = rand_init(hidden_layer_size, input_layer_size); %weights connecting 1 -> 2
 w3 = rand_init(classes, hidden_layer_size); %weights connecting 2 -> 3
 
